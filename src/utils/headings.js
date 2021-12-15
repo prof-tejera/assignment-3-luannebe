@@ -71,7 +71,7 @@ export const Emoji = styled.div`
   font-size: 3rem ;
   animation: ${(props) => props.celebrating 
     ? 
-    "letscelebrate 1s ease-in-out 3 alternate" 
+    "letscelebrate 1s ease-in-out 1s 3 alternate" 
     : 
     "none"
   };

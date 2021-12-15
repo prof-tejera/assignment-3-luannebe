@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
-import { NumInput, TimerDisplay } from "../generic";
+import { InputTime, TimerDisplay } from "../generic";
 import {
   TimerContainer,
   Header,
   RunTimer,
   SetTimer,
-  InputDisplay,
   ButtonGroup,
   Celebrate,
 } from "../../utils/containers";
@@ -17,23 +16,16 @@ import {
   PauseButton,
 } from "../generic/Button";
 import AppContext from "../../context/app-context";
-import { formatHours, formatMinutes, formatSeconds } from "../../utils/helpers";
 
 const Countdown = () => {
   const {
     mode,
     currentTime,
-    hours,
-    minutes,
-    seconds,
     isRunning,
     onStart,
     onStop,
     togglePause,
     handleRepeatTimer,
-    handleChangeSec,
-    handleChangeMinutes,
-    handleChangeHours,
   } = useContext(AppContext);
 
   return (
@@ -42,11 +34,7 @@ const Countdown = () => {
         <Title>Countdown</Title>
       </Header>
       <RunTimer visible={mode === "run"}>
-        <TimerDisplay
-          hours={formatHours(currentTime)}
-          minutes={formatMinutes(currentTime)}
-          seconds={formatSeconds(currentTime)}
-        />
+        <TimerDisplay time={currentTime} />
       </RunTimer>
       <SetTimer visible={mode === "specify"}>
         <Subtitle>Set Timer</Subtitle>

@@ -2,22 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { theme, fontWeight, typeScale } from "../../utils";
-import { rem } from 'polished';
+import { rem } from "polished";
 
 export const NavButton = (props) => {
- 
-  const { onClick, label }  = props;
+  const { onClick, label } = props;
 
-  return (
-    <Button onClick={onClick}>
-      {label}
-    </Button>
-  );
-}
+  return <Button onClick={onClick}>{label}</Button>;
+};
 
 const Button = styled.button`
   height: 40px;
-  width: ${rem('100px')};
+  width: ${rem("150px")};
   margin: 1rem auto;
   border-width: 1px;
   border-radius: 0;
@@ -31,17 +26,12 @@ const Button = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: ${theme.mediumBackground}
+    background-color: ${theme.mediumBackground};
+    text-decoration: line-through;
   }
-
 `;
 
 NavButton.propTypes = {
   label: PropTypes.string,
   onClick: PropTypes.func,
 };
-
-
-
-
-

@@ -5,6 +5,7 @@ import { TimerContainer, Header, RunTimer, SetTimer, InputDisplay,InputGroup, Cy
 import { Title,  Subtitle, Heading, Message, Caption, Emoji } from "../../utils/headings";
 import { WorkPeriod, RestPeriod } from "../generic/Period";
 import { StartButton, StopButton, ResetButton, PauseButton } from "../generic/Button";
+import { formatHours, formatMinutes, formatSeconds, } from "../../utils/helpers";
 
 const Tabata = () => {
   const { mode, currentTime, currentRound, minutes, seconds, restMinutes, restSeconds, rounds, isRunning, isRestPeriod, onStartTabata, onStop, togglePause, handleRepeatTimer, handleChangeSec, handleChangeMinutes, handleChangeRestMinutes, handleChangeRestSec, handleChangeRounds } = useContext( AppContext );
@@ -13,7 +14,10 @@ const Tabata = () => {
     <TimerContainer>
       <Header><Title>Tabata</Title></Header>
       <RunTimer visible={mode === "run"} >
-      <TimerDisplay time={currentTime} />
+        <TimerDisplay 
+          hours={ formatHours( currentTime ) } 
+          minutes={ formatMinutes( currentTime ) }
+          seconds={ formatSeconds( currentTime ) } />
         <Rounds currentRound={currentRound} totalRounds={rounds} />
         <Cycle>
           <WorkPeriod currentPeriod={!isRestPeriod}>Work</WorkPeriod>

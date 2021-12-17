@@ -7,46 +7,62 @@ export const AppContext = React.createContext({});
 const AppProvider = ({ children }) => {
   const [totalWorkoutLength, setTotalWorkoutLength] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const [currentTimerIndex, setCurrentTimerIndex] = useState(null);
+
   // Just for testing
   const [timerQueue, setTimerQueue] = useState([
     {
       id: 1,
       timerType: "stopwatch",
       workLength: 6,
-      restLength: 0,
-      totalLength: 6,
-      rounds: 1,
-      isRunning: false,
-      isCompleted: false,
-      isCurrent: false,
+    },
+    {
+      id: 2,
+      timerType: "stopwatch",
+      workLength: 10,
     },
   ]);
-  const [currentTimerIndex, setCurrentTimerIndex] = useState(0);
-  const [numTimers, setNumTimers] = useState(timerQueue.length);
 
-  const togglePause = (e) => {
-    //currentTimer.isRunning ? setIsRunning(false) : setIsRunning(true);
+  const onPause = (e) => {
+    setIsRunning(!isRunning);
+  };
+
+  const onStart = () => {
+    // set the current timer index to the first item in the queue
+    setCurrentTimerIndex(0);
+    // set the running time to 0
+    setCurrentTime(0);
+    // set the timer to running
+    setIsRunning(true);
+  };
+
+  const goToNextTimer = () => {
+    setCurrentTimerIndex(currentTimerIndex + 1);
+    setCurrentTime(0);
   };
 
   // Timers
   useEffect(() => {
+    // keeps track of interval id
     let timerId;
+
+    // pull the current time from the timer queue using the index
     let currentTimer = timerQueue[currentTimerIndex];
-    if (currentTimer.isRunning) {
+
+    // TODO we should be checking if we have finished the workout, so that we can prompt user
+    if (isRunning && currentTimer) {
       ///// STOPWATCH
       if (currentTimer.timerType === "stopwatch") {
-        if (currentTime === 0) {
-          setCurrentTime(1);
-        }
         timerId = setInterval(() => {
+          // if we have reached
           if (currentTime === currentTimer.workLength) {
-            //setMode("celebrate");
-            //advance or celebrate
-            currentTimer.isRunning = false;
+            goToNextTimer();
+          } else {
+            setCurrentTime(currentTime + 1);
           }
-          setCurrentTime(currentTime + 1);
         }, 1000);
-        ///// COUNTDOWN
+        ///// TODO Implement similar to stopwatch COUNTDOWN
       } else {
         timerId = setInterval(() => {
           if (currentTime === 1) {
@@ -64,7 +80,7 @@ const AppProvider = ({ children }) => {
         clearInterval(timerId);
       }
     };
-  }, [currentTimerIndex]);
+  }, [currentTimerIndex, isRunning, currentTime, timerQueue]);
 
   return (
     <AppContext.Provider
@@ -125,28 +141,10 @@ const AppProvider = ({ children }) => {
           }, 0);
           setTotalWorkoutLength(sum);
         },
-        renderTimer: (timer) => {
-          switch (timer.timerType) {
-            case "stopwatch":
-              setCurrentTime(0);
-              timer.isRunning = true;
-              return <Stopwatch />;
-            case "countdown":
-              console.log("worklength ", timer.workLength);
-              setCurrentTime(timer.workLength);
-              timer.isRunning = true;
-              return <Countdown />;
-            default:
-              return <Stopwatch />;
-          }
-        },
-        // runTimers: () => {
-        //   let count = 0;
-        //   while (count < timerQueue.length) {
-        //     setCurrentTimer(timerQueue[count]);
-        //     count++;
-        //   }
-        // },
+        onStart,
+        onPause,
+        getCurrentTimer: () => timerQueue[currentTimerIndex],
+        isRunning,
       }}
     >
       {children}

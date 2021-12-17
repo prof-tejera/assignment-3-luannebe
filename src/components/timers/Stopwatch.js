@@ -7,17 +7,11 @@ import {
   ButtonGroup,
 } from "../../utils/containers";
 import { Title } from "../../utils/headings";
-import {
-  StartButton,
-  StopButton,
-  ResetButton,
-  PauseButton,
-} from "../generic/Button";
+import { StartButton, PauseButton } from "../generic/Button";
 import { AppContext } from "../../context/AppProvider";
-import { formatHours, formatMinutes, formatSeconds } from "../../utils/helpers";
 
 const Stopwatch = () => {
-  const { currentTimer, currentTime, togglePause } = useContext(AppContext);
+  const { currentTime, onPause, isRunning } = useContext(AppContext);
 
   return (
     <TimerContainer>
@@ -25,18 +19,15 @@ const Stopwatch = () => {
         <Title>Stopwatch</Title>
       </Header>
       <RunTimer>
-        <TimerDisplay
-          hours={formatHours(currentTime)}
-          minutes={formatMinutes(currentTime)}
-          seconds={formatSeconds(currentTime)}
-        />
+        {/* CurrentTime is in seconds */}
+        <TimerDisplay time={currentTime} />
       </RunTimer>
       <ButtonGroup>
-        {/* <PauseButton
+        <PauseButton
           visible
-          onClick={togglePause}
-          label={currentTimer.isRunning ? "Pause" : "Resume"}
-        /> */}
+          onClick={onPause}
+          label={isRunning ? "Pause" : "Resume"}
+        />
         <StartButton visible label="Next" />
       </ButtonGroup>
     </TimerContainer>

@@ -9,15 +9,22 @@ import { Container, Nav } from "../utils/containers";
 import { StartButton } from "../components/generic/Button";
 
 function TimersView() {
-  const {
-    timerQueue,
-    totalWorkoutLength,
-    setCurrentTime,
-    currentTime,
-    currentTimerIndex,
-    setCurrentTimerIndex,
-    renderTimer,
-  } = useContext(AppContext);
+  const { timerQueue, totalWorkoutLength, onStart, getCurrentTimer } =
+    useContext(AppContext);
+
+  const renderTimer = () => {
+    const currentTimer = getCurrentTimer();
+    if (!currentTimer) return null;
+
+    switch (currentTimer.timerType) {
+      case "stopwatch":
+        return <Stopwatch />;
+      case "countdown":
+        return <Countdown />;
+      default:
+        return <Stopwatch />;
+    }
+  };
 
   return (
     <Container>
@@ -30,13 +37,14 @@ function TimersView() {
         <StartButton
           visible
           onClick={() => {
-            console.log("start timer", currentTimerIndex);
-            timerQueue[currentTimerIndex].isRunning = true;
+            // console.log("start timer", currentTimerIndex);
+            // timerQueue[currentTimerIndex].isRunning = true;
+            onStart();
           }}
           label="Start Workout"
         />
       </Nav>
-      {renderTimer(timerQueue[currentTimerIndex])}
+      {renderTimer()}
     </Container>
   );
 }

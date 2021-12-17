@@ -5,9 +5,13 @@ import { theme, fontWeight, typeScale } from "../../utils";
 import { rem } from "polished";
 
 export const NavButton = (props) => {
-  const { onClick, label } = props;
+  const { onClick, label, id } = props;
 
-  return <Button onClick={onClick}>{label}</Button>;
+  return (
+    <Button id={id} onClick={onClick}>
+      {label}
+    </Button>
+  );
 };
 
 const Button = styled.button`

@@ -1,7 +1,9 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppProvider";
 import { NumInput } from "../components/generic";
 import { NavButton } from "../components/generic";
+
 import {
   Container,
   AltHeader,
@@ -16,8 +18,11 @@ import { Title, Heading } from "../utils/headings";
 import { StartButton, ResetButton } from "../components/generic/Button";
 
 const AddTimer = () => {
-  const { createTimer, timerQueue, deleteTimer, sumTimers, workoutLength } =
+  const { createTimer, timerQueue, deleteTimer, totalWorkoutLength } =
     useContext(AppContext);
+
+  const navigate = useNavigate();
+
   // set by user
   const [timerType, setTimerType] = useState("stopwatch");
   const [seconds, setSeconds] = useState(0);
@@ -169,17 +174,22 @@ const AddTimer = () => {
       </InputDisplay>
     );
   }
+
   return (
     <Container>
       <Nav>
-        {timerQueue.map((timer) => (
-          <NavButton
-            key={timer.id}
-            onClick={() => deleteTimer(timer.id)}
-            label={timer.timerType}
-          />
-        ))}
-        <p>Total workout time: {workoutLength}</p>
+        {timerQueue.length > 0 &&
+          timerQueue.map((timer) => (
+            <NavButton
+              key={timer.id}
+              id={timer.id}
+              onClick={(e) => {
+                deleteTimer(timer.id);
+              }}
+              label={timer.timerType}
+            />
+          ))}
+        <p>Total workout time (seconds): {totalWorkoutLength} </p>
       </Nav>
       <TimerContainer>
         <AltHeader>
@@ -201,7 +211,13 @@ const AddTimer = () => {
           {timerSettingInputs}
         </form>
         <ButtonGroup>
-          <StartButton label="Done" />
+          <StartButton
+            visible
+            onClick={() => {
+              navigate("/");
+            }}
+            label="Go"
+          />
           <ResetButton label="Clear" />
           <StartButton
             visible
@@ -215,7 +231,6 @@ const AddTimer = () => {
                 restMinutes,
                 rounds,
               });
-              sumTimers();
             }}
             label="Add"
           />

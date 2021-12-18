@@ -36,9 +36,6 @@ const Wrapped = () => {
               <li>
                 <Link to={routes.DOCS}>Documentation</Link>
               </li>
-              <li>
-                <Link to={routes.ADD}>Add Timer</Link>
-              </li>
             </ul>
           </StyledNav>
           <Routes>

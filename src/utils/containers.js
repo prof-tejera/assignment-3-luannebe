@@ -16,7 +16,37 @@ export const Container = styled.div`
   width: 600px;
 `;
 
-export const Nav = styled.div`
+export const GridContainer = styled.div`
+  max-width: ${rem("600px")};
+  display: grid;
+  grid-template-rows: auto 100px;
+  grid-template-columns: 200px auto;
+  margin: 0 auto;
+`;
+
+export const TimerList = styled.div`
+  grid-row: 1/2;
+  grid-column: 1/2;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  margin: 20px;
+`;
+
+export const StatsContainer = styled.div`
+  grid-row: 2/3;
+  grid-column: 1/2;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  margin: 20px;
+`;
+
+export const ControllerContainer = styled.div`
+  grid-row: 2/3;
+  grid-column: 2/3;
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
@@ -25,6 +55,8 @@ export const Nav = styled.div`
 `;
 
 export const TimerContainer = styled.div`
+  grid-row: 1/2;
+  grid-column: 2/3;
   width: ${rem("360px")};
   height: ${rem("480px")};
   border: 1px solid ${theme.neutralBackground};

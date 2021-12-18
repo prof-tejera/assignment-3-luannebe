@@ -2,25 +2,23 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { theme, fontWeight, typeScale } from "../../utils";
-import { darken, rem } from 'polished';
+import { darken, rem } from "polished";
 
 const Button = (props) => {
- 
-  const { className, onClick, label }  = props;
+  const { className, onClick, label } = props;
 
   return (
-    <button 
-      onClick={onClick}
-      className={className} >
+    <button onClick={onClick} className={className}>
       {label}
     </button>
   );
-}
+};
 
 const StyledButton = styled(Button)`
-  display: ${(props) => props.visible ? "block" : "none"};
-  height: 40px;
-  width: ${rem('100px')};
+  display: ${(props) => (props.visible ? "block" : "none")};
+  //height: 40px;
+  width: ${(props) => (props.primary ? rem("300px") : rem("100px"))};
+  padding: 9px 0;
   margin: 6px;
   border-width: 0;
   border-radius: 40px;
@@ -37,45 +35,41 @@ const StyledButton = styled(Button)`
   }
 `;
 
-export const StartButton = styled(StyledButton) `
+export const StartButton = styled(StyledButton)`
   background-color: ${theme.startColor};
 
   &:hover {
-    background-color: ${darken('0.1', theme.startColor)};
+    background-color: ${darken("0.1", theme.startColor)};
   }
-
 `;
 
-export const StopButton = styled(StyledButton) `
+export const StopButton = styled(StyledButton)`
   background-color: ${theme.stopColor};
 
   &:hover {
-    background-color: ${darken('0.1', theme.stopColor)};
+    background-color: ${darken("0.1", theme.stopColor)};
   }
 `;
 
-export const ResetButton = styled(StyledButton) `
+export const ResetButton = styled(StyledButton)`
   background-color: ${theme.resetColor};
 
   &:hover {
-    background-color: ${darken('0.1', theme.resetColor)};
+    background-color: ${darken("0.1", theme.resetColor)};
   }
 `;
 
-export const PauseButton = styled(StyledButton) `
+export const PauseButton = styled(StyledButton)`
   background-color: ${theme.pauseColor};
 
   &:hover {
-    background-color: ${darken('0.1', theme.pauseColor)};
+    background-color: ${darken("0.1", theme.pauseColor)};
   }
 `;
-
 
 Button.propTypes = {
   label: PropTypes.string,
   onClick: PropTypes.func,
 };
 
-
 export default Button;
-

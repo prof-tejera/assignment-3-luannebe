@@ -1,0 +1,3 @@
+Questions for Brandon
+
+1. For my initial try at the AppProvider, I tried to follow Nico's model in the Blog example. The functions were defined inside the value object. For the new functions, you defined them above, and listed them in the value object. Is that just a stylist thing, or is there a reason to do them a different?

@@ -19,7 +19,6 @@ const Stopwatch = () => {
         <Title>Stopwatch</Title>
       </Header>
       <RunTimer>
-        {/* CurrentTime is in seconds */}
         <TimerDisplay time={currentTime} />
       </RunTimer>
       <ButtonGroup>

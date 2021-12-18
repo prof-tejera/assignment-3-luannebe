@@ -2,17 +2,19 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppProvider";
 import { NumInput } from "../components/generic";
-import { NavButton } from "../components/generic";
+import { ListItem } from "../components/generic/ListItem";
 
 import {
-  Container,
+  GridContainer,
+  StatsContainer,
+  ControllerContainer,
   AltHeader,
   InputDisplay,
   InputGroup,
   TimerContainer,
   ButtonGroup,
   SelectContainer,
-  Nav,
+  TimerList,
 } from "../utils/containers";
 import { Title, Heading } from "../utils/headings";
 import { StartButton, ResetButton } from "../components/generic/Button";
@@ -176,11 +178,11 @@ const AddTimer = () => {
   }
 
   return (
-    <Container>
-      <Nav>
+    <GridContainer>
+      <TimerList>
         {timerQueue.length > 0 &&
           timerQueue.map((timer) => (
-            <NavButton
+            <ListItem
               key={timer.id}
               id={timer.id}
               onClick={(e) => {
@@ -189,8 +191,7 @@ const AddTimer = () => {
               label={timer.timerType}
             />
           ))}
-        <p>Total workout time (seconds): {totalWorkoutLength} </p>
-      </Nav>
+      </TimerList>
       <TimerContainer>
         <AltHeader>
           <Title>Add a Timer</Title>
@@ -211,13 +212,6 @@ const AddTimer = () => {
           {timerSettingInputs}
         </form>
         <ButtonGroup>
-          <StartButton
-            visible
-            onClick={() => {
-              navigate("/");
-            }}
-            label="Go"
-          />
           <ResetButton label="Clear" />
           <StartButton
             visible
@@ -231,12 +225,31 @@ const AddTimer = () => {
                 restMinutes,
                 rounds,
               });
+              setSeconds(0);
+              setMinutes(0);
+              setHours(0);
+              setRestSeconds(0);
+              setRestMinutes(0);
+              setRounds(1);
             }}
             label="Add"
           />
         </ButtonGroup>
       </TimerContainer>
-    </Container>
+      <StatsContainer>
+        <p>Total workout time (seconds): {totalWorkoutLength} </p>
+      </StatsContainer>
+      <ControllerContainer>
+        <StartButton
+          visible
+          primary
+          onClick={() => {
+            navigate("/");
+          }}
+          label="Go to Workout"
+        />
+      </ControllerContainer>
+    </GridContainer>
   );
 };
 

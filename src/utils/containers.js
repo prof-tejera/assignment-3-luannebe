@@ -83,8 +83,8 @@ export const AltHeader = styled(Header)`
 `;
 
 export const RunTimer = styled.div`
-  // display: ${(props) => (props.visible ? "block" : "none")};
-  display: block;
+  //display: ${(props) => (props.visible ? "block" : "none")};
+  display: blocl;
   width: auto;
   height: auto;
 `;

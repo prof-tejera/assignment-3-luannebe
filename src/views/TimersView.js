@@ -4,7 +4,6 @@ import { AppContext } from "../context/AppProvider";
 import Stopwatch from "../components/timers/Stopwatch";
 import Countdown from "../components/timers/Countdown";
 import XY from "../components/timers/XY";
-import Celebrate from "../components/timers/XY";
 import Tabata from "../components/timers/Tabata";
 import {
   GridContainer,
@@ -38,8 +37,8 @@ function TimersView() {
       case "tabata":
         return <Tabata />;
       //   break;
-      default:
-        return <Celebrate />;
+      // default:
+      //   return <Celebrate />;
     }
   };
 

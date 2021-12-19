@@ -12,76 +12,65 @@ const AppProvider = ({ children }) => {
   const [isRunning, setIsRunning] = useState(false);
   const [isRestPeriod, setIsRestPeriod] = useState(false);
   const [currentTimerIndex, setCurrentTimerIndex] = useState(0);
-
+  const [timeToCelebrate, setTimeToCelebrate] = useState(false);
   const [timerQueue, setTimerQueue] = useState([]);
 
   const onPause = (e) => {
     setIsRunning(!isRunning);
   };
 
-  const onStart = () => {
-    // set the current timer index to the first item in the queue
-    setCurrentTimerIndex(0);
-    // set the timer to running
-    setIsRunning(true);
+  // helper function to set up state for current timer according to timer type
+  // i am sure there is a better way to do this .. but what?
 
-    // set the running time according to timer type
-    switch (timerQueue[0].timerType) {
+  const configureSettings = (i) => {
+    switch (timerQueue[i].timerType) {
       case "stopwatch":
         setCurrentTime(1);
         break;
       case "countdown":
-        let cTime = timerQueue[0].workLength;
+        let cTime = timerQueue[i].workLength;
         setCurrentTime(cTime);
         break;
       case "xy":
-        let xTime = timerQueue[0].workLength;
+        let xTime = timerQueue[i].workLength;
         setCurrentTime(xTime);
-        let xRounds = timerQueue[0].rounds;
+        let xRounds = timerQueue[i].rounds;
         setRounds(xRounds);
-        let xWorkLength = timerQueue[0].workLength;
+        let xWorkLength = timerQueue[i].workLength;
         setWorkLength(xWorkLength);
         setCurrentRound(1);
         break;
       case "tabata":
-        let tWorkLength = timerQueue[0].workLength;
+        let tWorkLength = timerQueue[i].workLength;
         setWorkLength(tWorkLength);
-        let tRestLength = timerQueue[0].restLength;
+        let tRestLength = timerQueue[i].restLength;
         setRestLength(tRestLength);
         setCurrentTime(tWorkLength + tWorkLength);
         setCurrentRound(1);
-        let tRounds = timerQueue[0].rounds;
+        let tRounds = timerQueue[i].rounds;
         setRounds(tRounds);
         setIsRestPeriod(false);
         break;
-      default:
-        setCurrentTime(0);
     }
   };
 
+  const onStart = () => {
+    // set the current timer index to the first item in the queue
+    setCurrentTimerIndex(0);
+    //  set up the state for the various timer types
+    configureSettings(0);
+    // set the timer to running
+    setIsRunning(true);
+  };
+
   const goToNextTimer = () => {
-    setCurrentTimerIndex(currentTimerIndex + 1);
-    //const nextTimer = timerQueue[currentTimerIndex];
-    // switch (nextTimer.timerType) {
-    //   case "stopwatch":
-    //     setCurrentTime(0);
-    //     break;
-    //   case "countdown":
-    //     setCurrentTime(nextTimer.workLength);
-    //     console.log("i am here and the currenttime is ", currentTime);
-    //     break;
-    //   case "xy":
-    //     setCurrentTime(nextTimer.workLength);
-    //     setCurrentRound(1);
-    //     break;
-    //   case "tabata":
-    //     setCurrentTime(nextTimer.workLength + nextTimer.restLength);
-    //     setIsRestPeriod(false);
-    //     setCurrentRound(1);
-    //     break;
-    //   default:
-    //     setCurrentTime(0);
-    // }
+    if (currentTimerIndex < timerQueue.length - 1) {
+      setCurrentTimerIndex(currentTimerIndex + 1);
+      configureSettings(currentTimerIndex + 1);
+    } else {
+      setIsRunning(false);
+      setTimeToCelebrate(true);
+    }
   };
 
   // Timers
@@ -91,14 +80,11 @@ const AppProvider = ({ children }) => {
 
     // pull the current timer from the timer queue using the index
     let currentTimer = timerQueue[currentTimerIndex];
-    // display the current time, which should have been set based on tiner.
 
-    // TODO we should be checking if we have finished the workout, so that we can prompt user
     if (isRunning && currentTimer) {
       ///// STOPWATCH
       if (currentTimer.timerType === "stopwatch") {
         timerId = setInterval(() => {
-          // if we have reached
           if (currentTime === currentTimer.workLength) {
             goToNextTimer();
           } else {
@@ -154,7 +140,17 @@ const AppProvider = ({ children }) => {
         clearInterval(timerId);
       }
     };
-  }, [currentTimerIndex, isRunning, currentTime, timerQueue]);
+  }, [
+    currentTimerIndex,
+    isRunning,
+    currentTime,
+    timerQueue,
+    currentRound,
+    goToNextTimer,
+    restLength,
+    workLength,
+    timeToCelebrate,
+  ]);
 
   return (
     <AppContext.Provider
@@ -219,7 +215,7 @@ const AppProvider = ({ children }) => {
               rounds,
             },
           ];
-          // add a Timer to the Queue
+          // add the new Timer to the Queue
           setTimerQueue(newQueue);
           // get total time for all configured timers
           let sum = newQueue.reduce((accumulator, timer) => {

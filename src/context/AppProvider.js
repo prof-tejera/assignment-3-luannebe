@@ -52,6 +52,8 @@ const AppProvider = ({ children }) => {
           setRounds(tRounds);
           setIsRestPeriod(false);
           break;
+        default:
+          setCurrentTime(0);
       }
     }
   };

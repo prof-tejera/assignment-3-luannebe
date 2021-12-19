@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   CelebrateContainer,
   Header,
   CelebrateMessage,
 } from "../../utils/containers";
 import { Title, Message, Caption, Emoji } from "../../utils/headings";
-import { AppContext } from "../../context/AppProvider";
 
 const Celebrate = () => {
   return (

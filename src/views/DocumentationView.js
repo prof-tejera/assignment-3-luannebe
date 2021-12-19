@@ -4,9 +4,14 @@ import styled from "styled-components";
 import DocumentComponent from "../components/documentation/DocumentComponent";
 
 import { StartButton } from "../components/generic/Button";
-import { NumInput, TimerDisplay, Rounds, } from "../components/generic";
+import {
+  NumInput,
+  TimerDisplay,
+  Rounds,
+  ListItem,
+  StaticListItem,
+} from "../components/generic";
 import { WorkPeriod } from "../components/generic/Period";
-
 
 const Container = styled.div`
   display: flex;
@@ -28,8 +33,7 @@ class Documentation extends React.Component {
           <Title>Documentation</Title>
           <DocumentComponent
             title="Button"
-            component={ <StartButton visible={true} 
-              label="Start" />}
+            component={<StartButton visible={true} label="Start" />}
             propDocs={[
               {
                 prop: "visible",
@@ -48,15 +52,30 @@ class Documentation extends React.Component {
                 description: "Timer control function",
                 type: "func",
               },
+              {
+                prop: "primary",
+                description: "Makes a wider button",
+                type: "boolean",
+              },
             ]}
           />
           <DocumentComponent
             title="NumInput"
-            component={<NumInput id="hours" name="hours" min="0" max="12" value="0" label="Hours" />}
+            component={
+              <NumInput
+                id="hours"
+                name="hours"
+                min="0"
+                max="12"
+                value="0"
+                label="Hours"
+              />
+            }
             propDocs={[
               {
                 prop: "id",
-                description: "Id for the number input field (HTML input type number)",
+                description:
+                  "Id for the number input field (HTML input type number)",
                 type: "string",
                 defaultValue: "",
               },
@@ -81,13 +100,13 @@ class Documentation extends React.Component {
               {
                 prop: "value",
                 description: "Number supplied by user",
-                type: "string",                
-                defaultValue: "0",
+                type: "number",
+                defaultValue: "0 or 1",
               },
               {
                 prop: "label",
                 description: "Text to label the number input control",
-                type: "string",   
+                type: "string",
                 defaultValue: "",
               },
             ]}
@@ -127,26 +146,56 @@ class Documentation extends React.Component {
             component={<TimerDisplay hours="00" minutes="00" seconds="00" />}
             propDocs={[
               {
-                prop: "hours",
-                description: "Displays hours",
-                type: "string",
-                defaultValue: "00",
-              },
-              {
-                prop: "minutes",
-                description: "Displays minutes",
-                type: "string",
-                defaultValue: "00",
-              },
-              {
-                prop: "seconds",
-                description: "Displays seconds",
-                type: "string",
-                defaultValue: "00",
+                prop: "currentTime",
+                description: "Current time in seconds",
+                type: "number",
+                defaultValue: "0",
               },
             ]}
           />
-       </div>
+          <DocumentComponent
+            title="ListItem"
+            component={<ListItem label="Countdown" />}
+            propDocs={[
+              {
+                prop: "id",
+                description: "Id of the timer",
+                type: "number",
+              },
+              {
+                prop: "label",
+                description: "Type of timer",
+                type: "string",
+              },
+              {
+                prop: "onClick",
+                description: "Function to delete timer",
+                type: "func",
+              },
+            ]}
+          />
+          <DocumentComponent
+            title="StaticListItem"
+            component={<StaticListItem label="Countdown" isCurrent={true} />}
+            propDocs={[
+              {
+                prop: "id",
+                description: "Id of the timer",
+                type: "number",
+              },
+              {
+                prop: "label",
+                description: "Type of timer",
+                type: "string",
+              },
+              {
+                prop: "current",
+                description: "Indicated currently playing timer",
+                type: "boolean",
+              },
+            ]}
+          />
+        </div>
       </Container>
     );
   }

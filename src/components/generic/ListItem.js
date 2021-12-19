@@ -18,6 +18,7 @@ const StyledListItem = styled.div`
   font-weight: ${fontWeight.light};
   background-color: ${theme.lightBackground};
   text-transform: none;
+  text-align: center;
   cursor: pointer;
   &:hover {
     background-color: ${theme.mediumBackground};
@@ -38,6 +39,7 @@ export const ListItem = (props) => {
 ListItem.propTypes = {
   label: PropTypes.string,
   onClick: PropTypes.func,
+  id: PropTypes.number,
 };
 
 //export default ListItem;

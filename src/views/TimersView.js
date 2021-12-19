@@ -24,7 +24,6 @@ function TimersView() {
     timeToCelebrate,
     currentTimerIndex,
     isRunning,
-    isCompleted,
   } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -61,7 +60,7 @@ function TimersView() {
               key={timer.id}
               id={timer.id}
               label={timer.timerType}
-              current={currentTimerIndex === timer.id}
+              isCurrent={currentTimerIndex === timer.id - 1}
             />
           ))}
       </TimerList>

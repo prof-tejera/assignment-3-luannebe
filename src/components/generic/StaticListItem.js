@@ -11,15 +11,12 @@ const StyledListItem = styled.div`
   border-width: 3px;
   border-radius: 0;
   color: ${(props) =>
-    props.active ? theme.lightTextColor : theme.primaryColor};
+    props.current ? theme.lightTextColor : theme.primaryColor};
   background-color: ${(props) =>
-    props.active ? theme.primaryColor : theme.lightBackground};
-  //border-color: ${theme.primaryColor};
-  //color: ${theme.primaryColor};
+    props.current ? theme.primaryColor : theme.lightBackground};
   font-family: ${theme.primaryFont};
   font-size: ${typeScale.small};
   font-weight: ${fontWeight.light};
-
   text-transform: none;
 `;
 

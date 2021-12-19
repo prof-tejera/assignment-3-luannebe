@@ -23,34 +23,36 @@ const AppProvider = ({ children }) => {
   // i am sure there is a better way to do this .. but what?
 
   const configureSettings = (i) => {
-    switch (timerQueue[i].timerType) {
-      case "stopwatch":
-        setCurrentTime(1);
-        break;
-      case "countdown":
-        let cTime = timerQueue[i].workLength;
-        setCurrentTime(cTime);
-        break;
-      case "xy":
-        let xTime = timerQueue[i].workLength;
-        setCurrentTime(xTime);
-        let xRounds = timerQueue[i].rounds;
-        setRounds(xRounds);
-        let xWorkLength = timerQueue[i].workLength;
-        setWorkLength(xWorkLength);
-        setCurrentRound(1);
-        break;
-      case "tabata":
-        let tWorkLength = timerQueue[i].workLength;
-        setWorkLength(tWorkLength);
-        let tRestLength = timerQueue[i].restLength;
-        setRestLength(tRestLength);
-        setCurrentTime(tWorkLength + tWorkLength);
-        setCurrentRound(1);
-        let tRounds = timerQueue[i].rounds;
-        setRounds(tRounds);
-        setIsRestPeriod(false);
-        break;
+    if (timerQueue[i].timerType) {
+      switch (timerQueue[i].timerType) {
+        case "stopwatch":
+          setCurrentTime(1);
+          break;
+        case "countdown":
+          let cTime = timerQueue[i].workLength;
+          setCurrentTime(cTime);
+          break;
+        case "xy":
+          let xTime = timerQueue[i].workLength;
+          setCurrentTime(xTime);
+          let xRounds = timerQueue[i].rounds;
+          setRounds(xRounds);
+          let xWorkLength = timerQueue[i].workLength;
+          setWorkLength(xWorkLength);
+          setCurrentRound(1);
+          break;
+        case "tabata":
+          let tWorkLength = timerQueue[i].workLength;
+          setWorkLength(tWorkLength);
+          let tRestLength = timerQueue[i].restLength;
+          setRestLength(tRestLength);
+          setCurrentTime(tWorkLength + tWorkLength);
+          setCurrentRound(1);
+          let tRounds = timerQueue[i].rounds;
+          setRounds(tRounds);
+          setIsRestPeriod(false);
+          break;
+      }
     }
   };
 
@@ -68,7 +70,7 @@ const AppProvider = ({ children }) => {
       setCurrentTimerIndex(currentTimerIndex + 1);
       configureSettings(currentTimerIndex + 1);
     } else {
-      setIsRunning(false);
+      // this never seems to get set
       setTimeToCelebrate(true);
     }
   };
@@ -175,7 +177,7 @@ const AppProvider = ({ children }) => {
         setWorkLength,
         // remove a timer from the queue
         deleteTimer: (id) => {
-          const updatedQueue = timerQueue.filter((timer) => timer.id != id);
+          const updatedQueue = timerQueue.filter((timer) => timer.id !== id);
           setTimerQueue(updatedQueue);
           let sum = updatedQueue.reduce((accumulator, timer) => {
             return accumulator + timer.totalLength;

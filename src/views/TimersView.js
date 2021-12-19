@@ -5,6 +5,7 @@ import Stopwatch from "../components/timers/Stopwatch";
 import Countdown from "../components/timers/Countdown";
 import XY from "../components/timers/XY";
 import Tabata from "../components/timers/Tabata";
+import Celebrate from "../components/generic/Celebrate";
 import {
   GridContainer,
   StatsContainer,
@@ -15,14 +16,23 @@ import { StartButton } from "../components/generic/Button";
 import { StaticListItem } from "../components/generic/StaticListItem";
 
 function TimersView() {
-  const { timerQueue, totalWorkoutLength, onStart, getCurrentTimer } =
-    useContext(AppContext);
+  const {
+    timerQueue,
+    totalWorkoutLength,
+    onStart,
+    getCurrentTimer,
+    timeToCelebrate,
+    currentTimerIndex,
+    isRunning,
+    isCompleted,
+  } = useContext(AppContext);
 
   const navigate = useNavigate();
 
   const renderTimer = () => {
     const currentTimer = getCurrentTimer();
     if (!currentTimer) return null;
+    if (timeToCelebrate) return <Celebrate />;
 
     switch (currentTimer.timerType) {
       case "stopwatch":
@@ -37,8 +47,8 @@ function TimersView() {
       case "tabata":
         return <Tabata />;
       //   break;
-      // default:
-      //   return <Celebrate />;
+      default:
+        return <Celebrate />;
     }
   };
 
@@ -51,6 +61,7 @@ function TimersView() {
               key={timer.id}
               id={timer.id}
               label={timer.timerType}
+              current={currentTimerIndex === timer.id}
             />
           ))}
       </TimerList>
@@ -60,7 +71,7 @@ function TimersView() {
       </StatsContainer>
       <ControllerContainer>
         <StartButton
-          visible
+          visible={timerQueue.length > 0}
           primary
           onClick={() => {
             onStart();
@@ -68,7 +79,7 @@ function TimersView() {
           label="Start Workout"
         />
         <StartButton
-          visible
+          visible={!isRunning || timeToCelebrate}
           primary
           onClick={() => {
             navigate("/add");

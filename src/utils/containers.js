@@ -70,6 +70,22 @@ export const TimerContainer = styled.div`
   margin: 20px auto;
 `;
 
+export const CelebrateContainer = styled.div`
+  grid-row: 1/2;
+  grid-column: 2/3;
+  width: ${rem("360px")};
+  height: ${rem("480px")};
+  border: 1px solid ${theme.neutralBackground};
+  border-radius: 12px;
+  background-color: ${theme.lightBackground};
+  filter: ${theme.dropShadow};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+  margin: 20px auto;
+`;
+
 export const Header = styled.div`
   width: 100%;
   height: auto;
@@ -84,7 +100,7 @@ export const AltHeader = styled(Header)`
 
 export const RunTimer = styled.div`
   //display: ${(props) => (props.visible ? "block" : "none")};
-  display: blocl;
+  display: block;
   width: auto;
   height: auto;
 `;
@@ -114,7 +130,7 @@ export const SelectContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const Celebrate = styled.div`
+export const CelebrateMessage = styled.div`
   display: ${(props) => (props.visible ? "block" : "none")};
   width: auto;
   height: auto;

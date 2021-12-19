@@ -1,26 +1,24 @@
 import React, { useContext } from "react";
 import {
-  TimerContainer,
-  Header,
   CelebrateContainer,
+  Header,
+  CelebrateMessage,
 } from "../../utils/containers";
 import { Title, Message, Caption, Emoji } from "../../utils/headings";
 import { AppContext } from "../../context/AppProvider";
 
 const Celebrate = () => {
-  const { isRunning } = useContext(AppContext);
-
   return (
-    <TimerContainer>
+    <CelebrateContainer>
       <Header>
-        <Title>Celebrate</Title>
+        <Title>You Did It!!</Title>
       </Header>
-      <CelebrateContainer>
+      <CelebrateMessage>
         <Message>YAY!</Message>
         <Caption>Happy Dance.</Caption>
         <Emoji celebrating>😀</Emoji>
-      </CelebrateContainer>
-    </TimerContainer>
+      </CelebrateMessage>
+    </CelebrateContainer>
   );
 };
 export default Celebrate;

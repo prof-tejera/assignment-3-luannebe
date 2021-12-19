@@ -16,7 +16,6 @@ const Button = (props) => {
 
 const StyledButton = styled(Button)`
   display: ${(props) => (props.visible ? "block" : "none")};
-  //height: 40px;
   width: ${(props) => (props.primary ? rem("300px") : rem("100px"))};
   padding: 9px 0;
   margin: 6px;

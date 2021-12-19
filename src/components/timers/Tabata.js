@@ -20,6 +20,7 @@ const Tabata = () => {
     isRunning,
     rounds,
     isRestPeriod,
+    goToNextTimer,
   } = useContext(AppContext);
 
   return (
@@ -42,7 +43,7 @@ const Tabata = () => {
           onClick={onPause}
           label={isRunning ? "Pause" : "Resume"}
         />
-        <StartButton visible label="Next" />
+        <StartButton visible label="Next" onClick={goToNextTimer} />
       </ButtonGroup>
     </TimerContainer>
   );

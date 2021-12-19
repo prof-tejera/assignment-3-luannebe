@@ -11,8 +11,14 @@ import { StartButton, PauseButton } from "../generic/Button";
 import { AppContext } from "../../context/AppProvider";
 
 const XY = () => {
-  const { currentTime, currentRound, onPause, isRunning, rounds } =
-    useContext(AppContext);
+  const {
+    currentTime,
+    currentRound,
+    onPause,
+    isRunning,
+    rounds,
+    goToNextTimer,
+  } = useContext(AppContext);
 
   return (
     <TimerContainer>
@@ -29,7 +35,7 @@ const XY = () => {
           onClick={onPause}
           label={isRunning ? "Pause" : "Resume"}
         />
-        <StartButton visible label="Next" />
+        <StartButton visible label="Next" onClick={goToNextTimer} />
       </ButtonGroup>
     </TimerContainer>
   );

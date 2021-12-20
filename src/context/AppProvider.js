@@ -150,7 +150,6 @@ const AppProvider = ({ children }) => {
     currentTime,
     timerQueue,
     currentRound,
-    goToNextTimer,
     restLength,
     workLength,
     timeToCelebrate,

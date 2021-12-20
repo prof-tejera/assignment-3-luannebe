@@ -69,10 +69,10 @@ const AppProvider = ({ children }) => {
 
   const goToNextTimer = () => {
     if (currentTimerIndex < timerQueue.length - 1) {
-      setCurrentTimerIndex(currentTimerIndex + 1);
       configureSettings(currentTimerIndex + 1);
+      setCurrentTimerIndex(currentTimerIndex + 1);
     } else {
-      // this never seems to get set
+      // this never seems to get set?
       setTimeToCelebrate(true);
     }
   };
